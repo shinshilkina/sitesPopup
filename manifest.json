@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "name": "Sites popup",
+  "description": "Тестовое задание на позицию Junior Web Developer",
+  "version": "1.0.0",
+  "browser_action": {
+    "default_icon": {
+      "19": "./icon.png",
+      "38": "./icon.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "webNavigation",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "declarativeContent",
+    "storage"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": ["messageScript.js"]
+  },
+  "content_security_policy": "script-src 'self' https://example.com; object-src 'self'",
+  "content_scripts": [{
+    "matches": ["http://*/*"],
+    "js": ["messageScript.js","background.js"],
+    "allFrames": true
+  }]
+}

@@ -1,0 +1,15 @@
+.modal {
+    width: 30vh;
+
+    margin: 1rem auto;
+
+    border: 1px solid black;
+    background-color: azure;
+}
+.modal-body {
+    text-align: center;
+}
+.modal-footer {
+    margin: 1rem;
+    text-align: end;
+}

@@ -1,0 +1,16 @@
+div {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+
+div {
+    margin: 1rem;
+}
+
+body {
+    width: 200px;
+    height: 200px;
+    background-color: azure;
+    border: 1px solid black;
+}
