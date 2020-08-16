@@ -52,7 +52,6 @@ port.postMessage({source: "page", status: "ready"});
 function handleCanvas(buttonClose) {
     buttonClose.addEventListener('click', function (event) {
         //debugger
-
         /*
         chrome.runtime.onConnect.addListener(function (incomingPort) {
             //debugger
@@ -84,4 +83,12 @@ myobserver.observe(document, {
     subtree: true
 });
 
-
+chrome.runtime.sendMessage({cmd: 'getMessage', domain: location.hostname},
+    (message) => {
+        if (message) {
+            const bodyArea = document.getElementsByTagName('body')[0];
+            bodyArea.insertAdjacentHTML('afterbegin', generatePopUp(message));
+            const headerArea = document.getElementsByTagName('head')[0];
+            headerArea.insertAdjacentHTML('afterbegin', generateHeader());
+        }
+    });

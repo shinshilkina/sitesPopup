@@ -20,10 +20,9 @@
     "declarativeContent",
     "storage"
   ],
-  "background_page": "background.html",
   "background": {
     "persistent": false,
-    "scripts": ["background.js", "getSites.js"]
+    "scripts": ["background.js"]
   },
   "content_security_policy": "script-src 'self' https://example.com; object-src 'self'",
   "content_scripts": [{
