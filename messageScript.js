@@ -24,68 +24,62 @@ function generateHeader() {
 }
 
 function generatePopUp(message) {
-    const script = document.createElement('script');
-    script.textContent = `
-        const removePopUp = () => {
-            const modal = document.querySelector('.modal');
-            modal.remove();
-        }
-    `;
-    (document.head||document.documentElement).appendChild(script);
-    script.remove();
     const htmlCode = `
     <div class="modal" style="z-index: 2">
         <div class="modal-body">
             <p>${message}</p>
         </div>
         <div class="modal-footer">
-            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal" onclick=removePopUp()>Close</button>
+            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
     </div>
     `;
 
     return htmlCode;
 }
-let name;
-let tabId;
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     const bodyArea = document.getElementsByTagName('body')[0];
     bodyArea.insertAdjacentHTML('afterbegin', generatePopUp(message.text));
     const headerArea = document.getElementsByTagName('head')[0];
     headerArea.insertAdjacentHTML('afterbegin', generateHeader());
-    name = message.tabId;
 });
-
-
+//debugger
+/*
+const port = chrome.runtime.connect('nahkkeilipolgghjgajpbgibpnfgjblo', {name: "closePopup"});
+port.postMessage({source: "page", status: "ready"});
+*/
 function handleCanvas(buttonClose) {
     buttonClose.addEventListener('click', function (event) {
+        //debugger
 
-
-            /*chrome.runtime.sendMessage("clicked", response => {
-                if (response) {
-                    alert(response);
-                } else {
-
-                }
-            });*/
+        /*
+        chrome.runtime.onConnect.addListener(function (incomingPort) {
+            //debugger
+            incomingPort.onMessage.addListener(function( msg ){
+                port.postMessage( 'button clicked' );
+            });
+        })
+         */
+        const modal = document.querySelector('.modal');
+        modal.remove();
     });
 }
 
 // set up the mutation observer
-const observer = new MutationObserver(function (mutations, me) {
+const myobserver = new MutationObserver(function (mutations, me) {
     // `mutations` is an array of mutations that occurred
     // `me` is the MutationObserver instance
     const buttonClose = document.querySelector('.btn-secondary');
     if (buttonClose) {
         handleCanvas(buttonClose);
         me.disconnect(); // stop observing
-        return;
+        return true;
     }
 });
 
 // start observing
-observer.observe(document, {
+myobserver.observe(document, {
     childList: true,
     subtree: true
 });

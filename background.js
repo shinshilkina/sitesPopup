@@ -1,8 +1,11 @@
-import getData from "./request.js";
+import responseSites from './getSites.js';
 
 const body = document.querySelector('body');
 
 function createList(elem) {
+    if (typeof elem == "string") {
+        elem = JSON.parse(elem);
+    }
     const container = document.createElement('div');
 
     const node = document.createElement('div');
@@ -22,35 +25,22 @@ function createList(elem) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    dataExtension();
+    const data = responseSites;
+    if (data instanceof Promise) {
+        data.then((res) => {
+            for (let i=0; i< localStorage.length; i++) {
+                const key = Object.keys(localStorage)[i];
+                createList(localStorage[key]);
+            }
+        })
+    } else {
+        for (let i=0; i< localStorage.length; i++) {
+            const key = Object.keys(localStorage)[i];
+            createList(localStorage[key]);
+        }
+    }
 });
 
-function dataExtension () {
-    getData().then( (res) => {
-        //write objects to localStorage
-        if (!localStorage) {
-            for (let i = 0; i < res.length; i++) {
-                let dataObj = Object.assign(res[i]);
-                Object.assign(dataObj, {count: 0});
-                const serialObj = JSON.stringify(dataObj);
-                try {
-                    localStorage.setItem(res[i].name, Object.assign(serialObj));
-                } catch (e) {
-                    if (e == QUOTA_EXCEEDED_ERR) {
-                        alert('Превышен лимит');
-                    }
-                }
-            }
-        }
-        //generate list of cites
-        for (let i = 0; i < res.length; i++) {
-            createList(res[i]);
-        }
-
-    });
-    //автообновление содержимого раширения
-    setTimeout(dataExtension, 60 * 60 * 1000);
-}
 
 function clickUrl(new_url, message) {
     chrome.tabs.query({currentWindow: true, active: true}, function (tab) {
@@ -112,8 +102,20 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
         }
     }
 });
+
+chrome.runtime.onConnect.addListener(function(port) {
+    //debugger
+    console.assert(port.name == "closePopup");
+    if (port.name === "closePopup") {
+        port.onMessage.addListener(function(msg) {
+            alert('message delivered!');
+        });
+    }
+
+});
 /*
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    debugger
     alert('message delivered! text: ' + request);
     /*
     for (let key in localStorage) {
