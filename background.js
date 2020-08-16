@@ -1,6 +1,6 @@
 let domains = null;
 
-function getSites() {
+function getSites(prevDomains) {
     return fetch('http://www.softomate.net/ext/employees/list.json', {
         method: 'GET',
         cache: 'reload'
@@ -10,7 +10,17 @@ function getSites() {
             domains = {};
             for (let i = 0; i < data.length; i++) {
                 let dataObj = Object.assign(data[i]);
-                dataObj.count = 0;
+                if (prevDomains !== null) {
+                    for (let key in prevDomains) {
+                        if ( dataObj.domain === key) {
+                            const elementMatched = prevDomains[key];
+                            dataObj.count = elementMatched.count;
+                        }
+                    }
+                }else {
+                    dataObj.count = 0;
+                }
+                dataObj.count = 0; //TODO delete this code
                 domains[data[i].domain] = dataObj;
             }
             return domains;
@@ -18,8 +28,8 @@ function getSites() {
 }
 
 function updateList() {
-    getSites();
-    setTimeout(updateList, 5000);//60 * 60 * 1000
+    getSites(domains);
+    setTimeout(updateList, 60 * 60 * 1000);
 }
 updateList();
 
