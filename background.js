@@ -17,7 +17,7 @@ function getSites(prevDomains) {
                             dataObj.count = elementMatched.count;
                         }
                     }
-                }else {
+                } else {
                     dataObj.count = 0;
                 }
                 dataObj.count = 0; //TODO delete this code
@@ -49,5 +49,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 domainRecord.count++;
                 sendResponse((domainRecord && domainRecord.count < 3) ? domainRecord.message : '');
             });
+    } else if (message.cmd === 'buttonClicked') {
+        let domainRecord = domains[message.domain] || null;
+        if (!domainRecord) {
+            domainRecord = domains[message.domain.replace(/^www\./, '')] || null;
+        }
+        domainRecord.count = 3;
+        sendResponse(domainRecord.count);
     }
 });

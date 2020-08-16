@@ -27,7 +27,7 @@
   "content_security_policy": "script-src 'self' https://example.com; object-src 'self'",
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["messageScript.js"],
+    "js": ["message.js"],
     "allFrames": true
   }]
 }
