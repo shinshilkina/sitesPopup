@@ -20,14 +20,15 @@
     "declarativeContent",
     "storage"
   ],
+  "background_page": "background.html",
   "background": {
     "persistent": false,
-    "scripts": ["messageScript.js"]
+    "scripts": ["background.js", "getSites.js"]
   },
   "content_security_policy": "script-src 'self' https://example.com; object-src 'self'",
   "content_scripts": [{
-    "matches": ["http://*/*"],
-    "js": ["messageScript.js","background.js"],
+    "matches": ["<all_urls>"],
+    "js": ["messageScript.js"],
     "allFrames": true
   }]
 }

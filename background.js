@@ -28,15 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
 function dataExtension () {
     getData().then( (res) => {
         //write objects to localStorage
-        for (let i=0; i< res.length; i++) {
-            let dataObj = Object.assign(res[i]);
-            Object.assign(dataObj, {count: 0});
-            const serialObj = JSON.stringify(dataObj);
-            try {
-                localStorage.setItem(res[i].name, Object.assign(serialObj));
-            } catch (e) {
-                if (e == QUOTA_EXCEEDED_ERR) {
-                    alert('Превышен лимит');
+        if (!localStorage) {
+            for (let i = 0; i < res.length; i++) {
+                let dataObj = Object.assign(res[i]);
+                Object.assign(dataObj, {count: 0});
+                const serialObj = JSON.stringify(dataObj);
+                try {
+                    localStorage.setItem(res[i].name, Object.assign(serialObj));
+                } catch (e) {
+                    if (e == QUOTA_EXCEEDED_ERR) {
+                        alert('Превышен лимит');
+                    }
                 }
             }
         }
@@ -64,7 +66,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
     let count;
     let name;
     if(tab.url !== undefined && changeInfo && changeInfo.status == "complete"
-        ){
+    ){
         for (let key in localStorage) {
             try {
                 let str = localStorage[key];
@@ -81,7 +83,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
             }
         }
 
-        if (count < 3) {
+        const maxCount = 100;
+        if (count < maxCount) {
             for (let key in localStorage) {
                 if (key === name) {
                     let str = localStorage[key];
@@ -99,7 +102,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
                         tab.id,
                         {
                             text: message,
-                            localStorage: localStorage
+                            localStorage: localStorage,
+                            tabId: tab.id
                         }
                     )
                 }
@@ -108,9 +112,10 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
         }
     }
 });
-
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-
+/*
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    alert('message delivered! text: ' + request);
+    /*
     for (let key in localStorage) {
         if (key === name) {
             let str = localStorage[key];
@@ -121,4 +126,5 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 
         }
     }
-});
+     */
+//});

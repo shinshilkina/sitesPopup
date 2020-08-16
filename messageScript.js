@@ -46,19 +46,48 @@ function generatePopUp(message) {
 
     return htmlCode;
 }
+let name;
+let tabId;
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     const bodyArea = document.getElementsByTagName('body')[0];
     bodyArea.insertAdjacentHTML('afterbegin', generatePopUp(message.text));
     const headerArea = document.getElementsByTagName('head')[0];
     headerArea.insertAdjacentHTML('afterbegin', generateHeader());
+    name = message.tabId;
 });
 
-let buttonClose;
-debugger
-    const find = () => {
-        buttonClose = document.querySelector('.btn-secondary');
-        buttonClose.addEventListener('click', function (event) {
-            alert('clicked!!!!');
-        });
+
+function handleCanvas(buttonClose) {
+    buttonClose.addEventListener('click', function (event) {
+
+
+            /*chrome.runtime.sendMessage("clicked", response => {
+                if (response) {
+                    alert(response);
+                } else {
+
+                }
+            });*/
+    });
+}
+
+// set up the mutation observer
+const observer = new MutationObserver(function (mutations, me) {
+    // `mutations` is an array of mutations that occurred
+    // `me` is the MutationObserver instance
+    const buttonClose = document.querySelector('.btn-secondary');
+    if (buttonClose) {
+        handleCanvas(buttonClose);
+        me.disconnect(); // stop observing
+        return;
     }
+});
+
+// start observing
+observer.observe(document, {
+    childList: true,
+    subtree: true
+});
+
+
