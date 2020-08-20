@@ -44,12 +44,12 @@ class ChangeMessage {
 chrome.runtime.sendMessage({cmd: 'getMessage', domain: location.hostname},
     (message) => {
         if (message) {
-            let currentMessage = new Message();
+            const currentMessage = new Message();
             currentMessage.generatePopUp();
             currentMessage.addStyle();
             currentMessage.closeButtonAction();
 
-            let changeMessage = new ChangeMessage(message);
-            changeMessage.changeText(message);
+            const changeMessage = new ChangeMessage(message);
+            changeMessage.changeText(changeMessage.message);
         }
     });
