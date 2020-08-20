@@ -36,7 +36,7 @@ function getSites(prevDomains) {
 }
 
 function updateList() {
-    getSites(domains);
+    getSites(domains).then();
     setTimeout(updateList, 60 * 60 * 1000);
 }
 updateList();
@@ -56,19 +56,9 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
         sendResponse((domainRecord && domainRecord.count < 3) ? domainRecord.message : '');
     } else if (message.cmd === 'buttonClicked') {
         const domainRecord = getRecordByDomain();
-        domainRecord.count = 100000; //TODO count = 3
+        domainRecord.count = 3;
         sendResponse(domainRecord.count);
     }else if (message.cmd === 'searchPage') {
         sendResponse(domains);
     }
 });
-
-/* TODO
-    Код-стиль нормальный. Не используются классы, неудобно
-    ориентироваться в коде, тк просто "куча" (в рамках данного объема тз)
-     функций, с классами код был бы более структурированный.
-    message.js: мне не нравится подход, что в js файле есть строчки
-    стилей и тимплейтов, тогда уж нужно было использоввать какой-то
-    компонентный подход, а лучше использовать React/Vue, стили можно
-    собирать отдельно и грузить в контент скрипты.
-*/
