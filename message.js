@@ -1,40 +1,21 @@
-function generateHeader() {
-    return `
-        <style>
-            .modal {
-            max-width: 30vh;
-            max-height: 10vh;
-            position: absolute;
-            top: 0;
-            right: auto;
-            left: auto;
-            
-            border: 1px solid black;
-            background-color: azure;
-            }
-            .modal-body {
-               text-align: center;
-            }
-            .modal-footer {
-                margin: 1rem;
-                text-align: end;
-            }
-        </style>
-    `;
+function changeMessageText(message) {
+    const messageTag = document.querySelector('.modal-body-message');
+    messageTag.textContent = message;
+    return true;
 }
 
 function generatePopUp(message) {
-    const htmlCode = `
-    <div class="modal" style="z-index: 2">
-        <div class="modal-body">
-            <p>${message}</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-    </div>
-    `;
-    return htmlCode;
+    let xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", chrome.extension.getURL ("message.html"), false );
+    xmlHttp.send( null );
+    let inject = document.createElement("div");
+    inject.innerHTML = xmlHttp.responseText
+    document.body.insertBefore (inject, document.body.firstChild);
+
+    changeMessageText(message);
+
+    return true;
 }
 
 function closeButtonAction() {
@@ -50,10 +31,10 @@ function closeButtonAction() {
 chrome.runtime.sendMessage({cmd: 'getMessage', domain: location.hostname},
     (message) => {
         if (message) {
-            const bodyArea = document.getElementsByTagName('body')[0];
-            bodyArea.insertAdjacentHTML('afterbegin', generatePopUp(message));
-            const headerArea = document.getElementsByTagName('head')[0];
-            headerArea.insertAdjacentHTML('afterbegin', generateHeader());
+            generatePopUp(message);
+            document.head.insertAdjacentHTML('beforeend',
+                '<link rel="stylesheet" type="text/css" href="' +
+                chrome.runtime.getURL("message.css") + '">');
 
             closeButtonAction();
         }

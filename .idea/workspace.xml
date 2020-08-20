@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="532e296e-f348-403c-a1bc-50337b711d00" name="Default Changelist" comment="" />
+    <list default="true" id="532e296e-f348-403c-a1bc-50337b711d00" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/message.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/message.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/background.js" beforeDir="false" afterPath="$PROJECT_DIR$/background.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/popup.css" beforeDir="false" afterPath="$PROJECT_DIR$/popup.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/popup.html" beforeDir="false" afterPath="$PROJECT_DIR$/popup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/popup.js" beforeDir="false" afterPath="$PROJECT_DIR$/popup.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +25,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1g97qVYlGTdd2TT1Rkf6QqHowx4" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,7 +50,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1597515144876</updated>
-      <workItem from="1597515145912" duration="46091000" />
+      <workItem from="1597515145912" duration="57550000" />
+      <workItem from="1597931106769" duration="39000" />
+      <workItem from="1597933037426" duration="2833000" />
     </task>
     <servers />
   </component>
@@ -55,9 +72,9 @@
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
     <state x="1149" y="276" width="616" height="554" key="find.popup/70.27.1850.1053@70.27.1850.1053" timestamp="1597596471854" />
-    <state x="1120" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1597597608849">
+    <state x="1120" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1597612185868">
       <screen x="70" y="27" width="1850" height="1053" />
     </state>
-    <state x="1120" y="259" width="672" height="678" key="search.everywhere.popup/70.27.1850.1053@70.27.1850.1053" timestamp="1597597608849" />
+    <state x="1120" y="259" width="672" height="678" key="search.everywhere.popup/70.27.1850.1053@70.27.1850.1053" timestamp="1597612185868" />
   </component>
 </project>

@@ -1,16 +1,56 @@
-div {
-    text-decoration: none;
-    color: black;
-    cursor: pointer;
-}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
-div {
-    margin: 1rem;
+html {
+    font-size: 16px;
+    border-radius: 5px;
 }
-
 body {
-    width: 200px;
-    height: 200px;
-    background-color: azure;
-    border: 1px solid black;
+    min-width: 200px;
+    min-height: 150px;
+
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2em;
+
+    background: linear-gradient(#ecece7, #d0d2d2);
+    filter: drop-shadow(3px 4px 5px #000);
 }
+
+.list-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+
+    flex-direction: column;
+
+    padding-left: 0;
+    margin-bottom: 0;
+    padding-bottom: 1rem;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+
+    padding: .5rem 1.25rem;
+    margin-bottom: -1px;
+
+    text-align: center;
+
+    color: #fbfcf7;
+    background-color: #393d41;
+    border: 1px solid rgba(0,0,0,.125);
+
+    transition-duration: 2.5s;
+    transition-property: color;
+    transition-delay: 0.5s;
+}
+
+.list-group-item:hover {
+    color: #393d41;
+    background-image: linear-gradient(#ecece7, #d0d2d2);
+}
+

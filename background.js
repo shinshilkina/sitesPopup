@@ -1,3 +1,12 @@
+chrome.browserAction.setIcon({
+    path: {
+        "19": "icon.png",
+        "38": "icon.png",
+        "48": "icon.png"
+
+    }
+});
+
 let domains = null;
 
 function getSites(prevDomains) {
@@ -20,7 +29,6 @@ function getSites(prevDomains) {
                 } else {
                     dataObj.count = 0;
                 }
-                dataObj.count = 0; //TODO delete this code
                 domains[data[i].domain] = dataObj;
             }
             return domains;
@@ -35,26 +43,32 @@ updateList();
 
 const getDomains = () => !domains ? getSites() : Promise.resolve(domains);
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+    const getRecordByDomain = () => {
+        return domains[message.domain] || domains[message.domain.replace(/^www\./, '')] || null;
+    };
+
+    const domains = await getDomains();
     if (message.cmd === 'list') {
-        return getDomains()
-            .then((domains) => sendResponse(domains));
+        sendResponse(domains);
     } else if (message.cmd === 'getMessage') {
-        return getDomains()
-            .then((domains) => {
-                let domainRecord = domains[message.domain] || null;
-                if (!domainRecord) {
-                    domainRecord = domains[message.domain.replace(/^www\./, '')] || null;
-                }
-                domainRecord.count++;
-                sendResponse((domainRecord && domainRecord.count < 3) ? domainRecord.message : '');
-            });
+        const domainRecord = getRecordByDomain();
+        sendResponse((domainRecord && domainRecord.count < 3) ? domainRecord.message : '');
     } else if (message.cmd === 'buttonClicked') {
-        let domainRecord = domains[message.domain] || null;
-        if (!domainRecord) {
-            domainRecord = domains[message.domain.replace(/^www\./, '')] || null;
-        }
-        domainRecord.count = 3;
+        const domainRecord = getRecordByDomain();
+        domainRecord.count = 100000; //TODO count = 3
         sendResponse(domainRecord.count);
+    }else if (message.cmd === 'searchPage') {
+        sendResponse(domains);
     }
 });
+
+/* TODO
+    Код-стиль нормальный. Не используются классы, неудобно
+    ориентироваться в коде, тк просто "куча" (в рамках данного объема тз)
+     функций, с классами код был бы более структурированный.
+    message.js: мне не нравится подход, что в js файле есть строчки
+    стилей и тимплейтов, тогда уж нужно было использоввать какой-то
+    компонентный подход, а лучше использовать React/Vue, стили можно
+    собирать отдельно и грузить в контент скрипты.
+*/

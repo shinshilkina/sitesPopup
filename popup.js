@@ -1,9 +1,11 @@
 const body = document.querySelector('body');
 
 function createList(elem) {
-    const container = document.createElement('div');
+    const container = document.createElement('ul');
+    container.className = 'list-group';
 
-    const node = document.createElement('a');
+    const node = document.createElement('li');
+    node.className = 'list-group-item';
     const textNode = document.createTextNode(elem.name);
     node.href = 'https://' + elem.domain;
     node.appendChild(textNode);
